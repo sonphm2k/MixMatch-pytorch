@@ -48,11 +48,6 @@ class Labeled_set(Dataset):
     self.list_images_path = []
     self.list_labels = []
     self.one_hot_label = one_hot_label
-    # glob
-    # for class_dir in glob.glob(root_train+'/*'):
-    #     for img_path in glob.glob(class_dir+'/*'):
-    #         self.list_images_path.append(img_path)
-    #         self.list_labels.append(class_dir[13:])
     # os
     for label in os.listdir(root_dir):
         img_dir = os.path.join(root_dir, label)
@@ -98,45 +93,6 @@ class Unlabeled_set(Dataset):
         image = self.transform(image) #Tensor(3,h,w)
     image_name = self.list_images_name[idx]
     return image_name, image
-
-class TransformMixMatch(object):
-    def __init__(self):
-        self.transform1 = transforms.Compose([
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(size=188,
-                                padding=int(112*0.125),
-                                padding_mode='reflect'),
-            transforms.Resize(size = (224,224)),
-        ])
-
-        self.transform2 = transforms.Compose([
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(size=200,
-                                padding=int(112*0.125),
-                                padding_mode='reflect'),
-            transforms.Resize(size = (224,224)),
-            RandAugmentMC(n=2, m=10),
-        ])
-        self.transform3 = transforms.Compose([
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(size=224,
-                                padding=int(112*0.125),
-                                padding_mode='reflect'),
-            transforms.Resize(size = (224,224)),
-            RandAugmentMC(n=4, m=10),
-        ])
-
-        self.normalize = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize(mean=mean, std=std),
-        ])
-
-    def __call__(self, x):
-        transform1 = self.transform1(x)
-        transform2 = self.transform2(x)
-        transform3 = self.transform3(x)
-
-        return self.normalize(transform1), self.normalize(transform2), self.normalize(transform3)
 
 # Test
 # root_labeled = 'datasets/train/Images'
