@@ -7,12 +7,12 @@ def train(labeled_trainloader, unlabeled_trainloader, model, optimizer, ema_mode
     list_losses_x = []
     list_losses_u = []
     # configs
-    num_classes = configs['num_classes']
-    batch_size = configs['batch_size']
-    lambda_u = configs['lambda_u']
-    alpha = configs['alpha']
-    T = configs['T']
-    K = configs['K']
+    num_classes = config.num_classes
+    batch_size = config.batch_size
+    lambda_u = config.lambda_u
+    alpha = config.alpha
+    T = config.T
+    K = config.K
 
     train_iteration = len(unlabeled_trainloader) + 1 # all_test_img / batch_size + 1
     labeled_train_iter = iter(labeled_trainloader)
