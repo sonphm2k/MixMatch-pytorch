@@ -39,7 +39,7 @@ def main():
     # Train
     train_criterion = SemiLoss()
     if config.optim == 'ADAM':
-        optimizer = optim.Adam(model.parameters(), configs['lr'])
+        optimizer = optim.Adam(model.parameters(), config.lr)
     if not os.path.exists("save_model"):
         os.mkdir("save_model")
 
@@ -50,7 +50,7 @@ def main():
         # training
         train_losses, train_losses_x, train_losses_u = train(labeled_trainloader, unlabeled_trainloader,
                                                              model, optimizer, ema,train_criterion,
-                                                             epoch, device, configs)
+                                                             epoch, device, config)
         print('Epochs: {}, Train_loss: {}, loss_x: {}'.format(epoch, train_losses, train_losses_x))
         torch.save(ema.model.state_dict(), "save_model/MixMatch_model_epoch_{}_loss{}.pth".format(epoch, train_losses))
 
