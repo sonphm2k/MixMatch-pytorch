@@ -1,16 +1,16 @@
 class Config(object):
-    def
-configs = {
-    "epochs": 1,
-    "batch_size": 2,
-    "num_classes": 10,
-    # -----------------
-    "lr": 10e-6,
-    "optim": "ADAM",  # type of optimizer [Adam, SGD]
-    "lambda_u": 30,
-    # 75       Hyper-parameter weighting the contribution of the unlabeled examples to the training loss
-    "alpha": 0.75,  # 0.75     Hyperparameter for the Beta distribution used in MixU
-    "T": 0.5,  # 0.5      Temperature parameter for sharpening used in MixMatch
-    "K": 3,  # 3        Number of augmentations used when guessing labels in MixMatch
-    "ema_decay": 0.999,
-}
+    def __init__(self):
+        self.epochs = 10
+        self.batch_size = 8
+        self.num_classes = 10
+        # -----------------
+        self.lambda_u = 30 # Hyper-parameter weighting the contribution of the unlabeled examples to the training loss
+        self.alpha = 0.75  # Hyper-parameter for the Beta distribution used in MixU
+        self.T = 0.5       # Temperature parameter for sharpening used in MixMatch
+        self.K = 3         # Number of augmentations used when guessing labels in MixMatch
+        # -----------------
+        self.lr = 10e-6
+        self.optim = "ADAM"  # type of optimizer [Adam, SGD]
+        self.ema_decay = 0.999
+
+

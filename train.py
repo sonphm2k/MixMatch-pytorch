@@ -7,9 +7,11 @@ from datasets.dataset import *
 from mixmatch import *
 from models.model import WideEffnet
 from models.ema import EMA
-
+from config import *
 
 def main():
+    # Config
+    config = Config()
     #Data
     root_labeled = 'datasets/train/Images'
     root_unlabeled = 'datasets/phase1-test-images'
@@ -17,11 +19,11 @@ def main():
     train_labeled_set, train_unlabeled_set = get_dataset(root_labeled, root_unlabeled, one_hot_label)
     labeled_trainloader = DataLoader(train_labeled_set,
                                      sampler = RandomSampler(train_labeled_set),
-                                     batch_size = configs["batch_size"],
+                                     batch_size = config.batch_size,
                                      drop_last=True)
     unlabeled_trainloader = DataLoader(train_unlabeled_set,
                                        sampler= RandomSampler(train_unlabeled_set),
-                                       batch_size= configs["batch_size"],
+                                       batch_size= config.batch_size,
                                        drop_last=True)
 
     # Model - EMA model
@@ -33,10 +35,10 @@ def main():
     # model.load_state_dict(torch.load('', map_location=device))
     model.to(device)
     # model.eval()
-    ema = EMA(model, configs['ema_decay'])
+    ema = EMA(model, config.ema_decay)
     # Train
     train_criterion = SemiLoss()
-    if configs['optim'] == 'ADAM':
+    if config.optim == 'ADAM':
         optimizer = optim.Adam(model.parameters(), configs['lr'])
     if not os.path.exists("save_model"):
         os.mkdir("save_model")
@@ -44,7 +46,7 @@ def main():
     list_train_losses = []
     list_train_losses_w = []
     list_train_losses_u = []
-    for epoch in range(configs['epochs']):
+    for epoch in range(config.epochs):
         # training
         train_losses, train_losses_x, train_losses_u = train(labeled_trainloader, unlabeled_trainloader,
                                                                 model, optimizer, ema,

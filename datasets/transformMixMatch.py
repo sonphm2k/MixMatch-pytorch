@@ -8,14 +8,12 @@ class TransformMixMatch(object):
             transforms.RandomCrop(size=188,
                                 padding=int(112*0.125),
                                 padding_mode='reflect'),
-            transforms.Resize(size = (224,224)),
         ])
         self.transform2 = transforms.Compose([
             transforms.RandomHorizontalFlip(),
             transforms.RandomCrop(size=200,
                                 padding=int(112*0.125),
                                 padding_mode='reflect'),
-            transforms.Resize(size = (224,224)),
             RandAugmentMC(n=2, m=10),
         ])
         self.transform3 = transforms.Compose([
@@ -23,11 +21,11 @@ class TransformMixMatch(object):
             transforms.RandomCrop(size=224,
                                 padding=int(112*0.125),
                                 padding_mode='reflect'),
-            transforms.Resize(size = (224,224)),
             RandAugmentMC(n=4, m=10),
         ])
 
         self.normalize = transforms.Compose([
+            transforms.Resize(size=(224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean=mean, std=std),
         ])
