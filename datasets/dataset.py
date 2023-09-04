@@ -95,8 +95,8 @@ class Unlabeled_set(Dataset):
     return image_name, image
 
 # Test
-# root_labeled = 'datasets/train/Images'
-# root_unlabeled = 'datasets/phase1-test-images'
+# root_labeled = './train/Images'
+# root_unlabeled = './phase1-test-images'
 # one_hot_label = one_hot_labels(root_labeled)
 # label, unlabel = get_dataset(root_labeled, root_unlabeled, one_hot_label)
 # print(len(label))
