@@ -49,8 +49,8 @@ def main():
     for epoch in range(config.epochs):
         # training
         train_losses, train_losses_x, train_losses_u = train(labeled_trainloader, unlabeled_trainloader,
-                                                                model, optimizer, ema,
-                                                                train_criterion, epoch, device, configs)
+                                                             model, optimizer, ema,train_criterion,
+                                                             epoch, device, configs)
         print('Epochs: {}, Train_loss: {}, loss_x: {}'.format(epoch, train_losses, train_losses_x))
         torch.save(ema.model.state_dict(), "save_model/MixMatch_model_epoch_{}_loss{}.pth".format(epoch, train_losses))
 
