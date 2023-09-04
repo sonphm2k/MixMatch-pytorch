@@ -1,3 +1,6 @@
+from torchvision import transforms
+from .randaugment import RandAugmentMC
+
 class TransformMixMatch(object):
     def __init__(self):
         self.transform1 = transforms.Compose([
@@ -7,7 +10,6 @@ class TransformMixMatch(object):
                                 padding_mode='reflect'),
             transforms.Resize(size = (224,224)),
         ])
-
         self.transform2 = transforms.Compose([
             transforms.RandomHorizontalFlip(),
             transforms.RandomCrop(size=200,
@@ -34,5 +36,4 @@ class TransformMixMatch(object):
         transform1 = self.transform1(x)
         transform2 = self.transform2(x)
         transform3 = self.transform3(x)
-
         return self.normalize(transform1), self.normalize(transform2), self.normalize(transform3)
