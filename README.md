@@ -6,7 +6,7 @@
 pip install -r requirements.txt
 ```
 
-## Dataset
+## MixMatch
 ![alt-text](README/mixmatch_workflow.png)
 
 ## Result
